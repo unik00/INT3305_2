@@ -1,3 +1,5 @@
+from math import log2
+
 def prob(n, p):
 	""" Calculates geometric distribution
 
@@ -42,6 +44,10 @@ def sumProb(N, p):
 
 	Gives the sum of geometric distribution of all i not greater than N. 
 
+	We can use sumProb() to verify that the sum of geometric distribution equals to 1
+	by giving different N from a small (say 1) to a large integer (say 1000) and observe 
+	how the results converge to 1.
+	
 	Args:
 		N: a positive intenger
 		p: a float denoting probability of success in each trial, 0 < p <= 1		
@@ -75,8 +81,13 @@ def approxEntropy(N, p):
 	assert 0 < p and p <= 1
 	answer = 0
 	for i in range(1, N + 1):
-		answer += infoMeasure(i, p)
+		answer += infoMeasure(i, p) * prob(i, p)
 	return answer
 
 if __name__ == "__main__":
-	print(sumProb(1000, 0.5))
+	print("Verify the sum of geometric distribution: ")
+	for i in range(1, 1000):
+		print(sumProb(i, 1/2))
+
+	print("Approximate the entropy of geometric distribution: ")
+	print(approxEntropy(1000, 1/2))
