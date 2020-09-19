@@ -1,6 +1,14 @@
 from math import log2
 
+""" Pre-calculate combinations"""
 storage = dict() # for memorization, avoid repeated computations.
+MAX_N = 2000
+storage[0, 0] = 1
+for i in range(1, MAX_N+1):
+	storage[(i, 0)] = 1
+	storage[(i, i)] = 1
+	for j in range(1, i):
+		storage[(i, j)] = storage[(i - 1,j - 1)] + storage[(i - 1, j)]
 
 def C(n, k):
 	""" Calculates the k-combinations of a n-element set.
@@ -8,14 +16,7 @@ def C(n, k):
 		k : non-negative integer.
 		n : positive integer. 
 	"""
-	if (n == k) or (k == 0):
-		return 1
-
-	if (n, k) in storage:
-		return storage[(n, k)]
-
-	storage[(n, k)] = C(n - 1, k - 1) + C(n - 1, k)
-	return storage[(n, k)] 
+	return storage[(n, k)]
 
 def prob(n, p, N):
 	""" Calculates binomial distribution
