@@ -2,9 +2,9 @@ from math import log2
 
 """ Pre-calculate combinations"""
 storage = dict() # for memorization, avoid repeated computations.
-MAX_N = 2000
+MAX_N = 1000
 storage[0, 0] = 1
-for i in range(1, MAX_N+1):
+for i in range(1, MAX_N + 1):
 	storage[(i, 0)] = 1
 	storage[(i, i)] = 1
 	for j in range(1, i):
