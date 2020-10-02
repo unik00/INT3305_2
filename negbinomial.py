@@ -115,8 +115,8 @@ def approxEntropy(N, p, r):
 if __name__ == "__main__":
     print("Verify the sum of negative-binomial distribution: ")
 
-    start = 2
-    end = 100
+    start = 25
+    end = 50
     for i in range(start, end + 1):
         print(sumProb(i, 1/2, start))
 
