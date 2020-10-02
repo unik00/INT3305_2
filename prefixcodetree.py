@@ -7,17 +7,17 @@ class PrefixCodeTree:
     def __init__(self):
         self.root = Node()
 
-    """A wrapper of insert_()"""
     def insert(self, codeword, symbol):
+        """A wrapper of insert_()"""
         self.insert_(self.root, codeword, symbol)
 
-    """
-    Args:
-        node: current node
-        codeword: array of 0s and 1s
-        symbol: string
-    """
     def insert_(self, node, codeword, symbol):
+        """
+        Args:
+            node: current node
+            codeword: array of 0s and 1s
+            symbol: string
+        """
         if len(codeword) == 0:
             node.symbol = symbol        
         else:
@@ -26,14 +26,14 @@ class PrefixCodeTree:
                 node.childs[c] = Node()
             self.insert_(node.childs[c], codeword[1:], symbol)
 
-    """
-    Args:
-        node: current node
-        data: array of 0s and 1s
-    Returns:
-        a string.
-    """
     def traverse(self, node, data):
+        """
+        Args:
+            node: current node
+            data: array of 0s and 1s
+        Returns:
+            a string.
+        """
         if len(data) == 0:
             return node.symbol
 
@@ -42,15 +42,17 @@ class PrefixCodeTree:
         else: 
             return node.symbol + self.traverse(node.childs[data[0]], data[1:])
 
-    """
-    Args:
-        encodedData: array of bytes.
-        datalen: len of the prefix that we care, the rest should be ignored.
-    Returns:
-        a string.
-    """
     def decode(self, encodedData, datalen):
+        """
+        Args:
+            encodedData: array of bytes.
+            datalen: len of the prefix that we care, the rest should be ignored.
+        Returns:
+            a string.
+        """
+        
         def getBits():
+            """ Get a bitstring from encodedData, and trim to datalen """
             bits = []
             for i in range(len(encodedData)):
                 for j in reversed(range(8)):
