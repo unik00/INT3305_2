@@ -18,14 +18,12 @@ class PrefixCodeTree:
         symbol: string
     """
     def insert_(self, node, codeword, symbol):
-        # print(codeword, symbol)
-        c = codeword[0]
-        if node.childs[c] is None:
-            node.childs[c] = Node()
-
-        if len(codeword) == 1:
-            node.symbol = symbol
+        if len(codeword) == 0:
+            node.symbol = symbol        
         else:
+            c = codeword[0]
+            if node.childs[c] is None:
+                node.childs[c] = Node()
             self.insert_(node.childs[c], codeword[1:], symbol)
 
     """
@@ -36,11 +34,13 @@ class PrefixCodeTree:
         a string.
     """
     def traverse(self, node, data):
-        print(data)
-        if len(data) == 1:
+        if len(data) == 0:
             return node.symbol
 
-        return node.symbol + self.traverse(node.childs[data[0]], data[1:])
+        if node.childs[data[0]] is None:
+            return node.symbol + self.traverse(self.root, data)
+        else: 
+            return node.symbol + self.traverse(node.childs[data[0]], data[1:])
 
     """
     Args:
@@ -53,7 +53,6 @@ class PrefixCodeTree:
         def getBits():
             bits = []
             for i in range(len(encodedData)):
-                print(encodedData[i])
                 for j in reversed(range(8)):
                     bit = ((1 << j) & encodedData[i]) 
                     if bit > 1: bit = 1
@@ -79,3 +78,4 @@ if __name__ == "__main__":
         codeTree.insert(codebook[symbol], symbol)
 
     message = codeTree.decode(b'\xd2\x9f\x20', 21)
+    print(message)
